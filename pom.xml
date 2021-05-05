@@ -6,11 +6,102 @@
 
     <groupId>ru.anton.saushkin</groupId>
     <artifactId>FirstSwing</artifactId>
+    <packaging>jar</packaging>
     <version>1.0</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <launch4j.version>2.1.1</launch4j.version>
+
+        <exeFileName>${project.artifactId}</exeFileName>
+        <product.company>company</product.company>
+        <product.title>product name</product.title>
+        <product.version>${version}.0.0</product.version>
     </properties>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>
+                    com.akathist.maven.plugins.launch4j
+                </groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>plugin-loader</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <outfile>target/${exeFileName}.exe</outfile>
+                            <jar>target/${project.artifactId}.jar</jar>
+                            <errTitle>${product.title}</errTitle>
+                            <icon>icon.ico</icon>
+                            <classPath>
+                                <mainClass>ru.anton.saushkin.FirstSwingExample</mainClass>
+                                <addDependencies>
+                                    true
+                                </addDependencies>
+                                <preCp>anything</preCp>
+                            </classPath>
+                            <jre>
+                                <minVersion>
+                                    ${java.version}
+                                </minVersion>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>
+                                    ${product.version}
+                                </fileVersion>
+                                <txtFileVersion>
+                                    ${product.version}
+                                </txtFileVersion>
+                                <fileDescription>
+                                    Swing application
+                                </fileDescription>
+                                <copyright>
+                                    Copyright © 2011 ${product.company}
+                                </copyright>
+                                <productVersion>
+                                    ${product.version}
+                                </productVersion>
+                                <txtProductVersion>
+                                    ${product.version}
+                                </txtProductVersion>
+                                <companyName>
+                                    ${product.company}
+                                </companyName>
+                                <productName>
+                                    ${product.title}
+                                </productName>
+                                <internalName>
+                                    ${exeFileName}
+                                </internalName>
+                                <originalFilename>
+                                    ${exeFileName}.exe
+                                </originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.akathist.maven.plugins.launch4j</groupId>
+            <artifactId>launch4j-maven-plugin</artifactId>
+            <version>${launch4j.version}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
